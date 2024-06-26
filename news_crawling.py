@@ -56,19 +56,9 @@ clean_text = preprocess_text(article_text)
 print(f"Clean Text: {clean_text[:500]}...")
 
 
-'''
-# 요약 파이프라인 예시 (Hugging Face의 transformers 사용)
+# 요약 모델 로드
 summarizer = pipeline('summarization', model='facebook/bart-large-cnn')
 
-# Chunk the text to handle large inputs
-max_chunk_length = 512
-input_chunks = [clean_text[i:i+max_chunk_length] for i in range(0, len(clean_text), max_chunk_length)]
-
-try:
-    summaries = [summarizer(chunk, max_length=150, min_length=30, do_sample=False)[0]['summary_text'] for chunk in input_chunks]
-    full_summary = ' '.join(summaries)
-    print("Summary:", full_summary)
-except Exception as e:
-    print(f"Failed to summarize the text: {e}")
-
-'''
+# 요약 생성
+summary = summarizer(clean_text, max_length=130, min_length=30, do_sample=False)
+print(f"Summary: {summary[0]['summary_text']}")
