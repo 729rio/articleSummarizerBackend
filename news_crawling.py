@@ -60,5 +60,15 @@ print(f"Clean Text: {clean_text[:500]}...")
 summarizer = pipeline('summarization', model='facebook/bart-large-cnn')
 
 # 요약 생성
-summary = summarizer(clean_text, max_length=130, min_length=30, do_sample=False)
-print(f"Summary: {summary[0]['summary_text']}")
+#summary = summarizer(clean_text, max_length=130, min_length=30, #do_sample=False)
+#print(f"Summary: {summary[0]['summary_text']}")
+
+# 기사 요약 함수
+def summarize_article(url):
+    article_text = get_article_text(url)
+    if article_text:
+        clean_text = preprocess_text(article_text)
+        summary = summarizer(clean_text, max_length=130, min_length=30, do_sample=False)
+        return summary[0]['summary_text']
+    else:
+        return "Failed to retrieve the article text"
